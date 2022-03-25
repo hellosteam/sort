@@ -1,0 +1,72 @@
+#include<stdio.h>
+void Quick_sort(int* arr,int start,int end)//快速排序，递归，这里arr是要排序的数组，start和end是要排序区间的开始和结束下标。这是我自己写的。可能不够高效
+{
+	if (end <= start)
+	{
+		return;
+	}
+	int start1 = start;
+	for (int i = start+1; i <= end; i++)
+	{
+		if (arr[start] > arr[i])
+		{
+			int tmp = arr[i];
+			for (int j=i; j > start1; j--)
+			{
+				arr[j] = arr[j-1];
+			}
+			arr[start1] = tmp;
+			start1++;
+		}
+	}
+	Quick_sort(arr, start, start1);
+	Quick_sort(arr, start1 + 1, end);
+}
+void swap(int* a, int* b)//交换两个数的位置。
+{
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+void Quick_sort1(int* arr, int start, int end)//这个也是一个快速排序，这个排序是参考别人的方法，感觉这个算法更加高效，因为这个算法使用了更少的swap函数。
+{
+	if (start >= end)
+	{
+		return;
+	}
+	int left = start+1, right = end;
+	int mid = arr[start];
+	while (left < right)
+	{
+		while (arr[left] < mid && left < right)
+		{
+			left++;
+		}
+		while (arr[right] > mid && left < right)
+		{
+			right--;
+		}
+		swap(arr + left, arr + right);
+	}
+	if (arr[left] < mid)
+	{
+		swap(arr+start, arr + left);
+	}
+	else
+	{
+		left--;
+	}
+		Quick_sort1(arr, start, left);
+		Quick_sort1(arr, left + 1, end);
+}
+int main()
+{
+	int arr[10] = { 10,9,8,7,6,5,4,3,2,1 };
+	Quick_sort1(arr, 0, 9);
+	Quick_aort(arr, 0, 9);
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+	return 0;
+}
